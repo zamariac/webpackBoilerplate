@@ -1,8 +1,35 @@
 // import the stylesheet. this is necessary so that webpack will compile all the sass into css and then build it into our style.css file
 import './../styles/main.scss';
 
-// import a module from another file.
-import tiy from './app.js';
+import Backbone from 'backbone';
+import $ from 'jquery';
 
-// Looks like the imported module was a function, because here we're executing it!
-tiy();
+
+const basicView = Backbone.View.extend({     //backbone comes with views and models. views is setting us up to create html, extend adds the html functionality
+		initialize: function(url,linkName){
+			this.url = url;
+			this.linkName = linkName;
+
+		},
+
+		template: function(){
+			return `<a href="${this.url}">$(this.linkName)</a>`
+		},
+		tagName: 'section',
+		render: function(){
+			this.el.innerHTML = this.template();
+			$('body').append(this.el)
+		}
+	});
+
+
+//var viewInPage = new basicView('http://google.com');
+
+var googleLink = new basicView('http://google.com', 'google');
+var tiyLink = new basicView('http://tiy.com', 'tiy');
+
+googleLink.render();
+tiyLink.render();
+
+
+console.log(new basicView()); //backbone view is a div 
